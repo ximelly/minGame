@@ -1,48 +1,27 @@
-//import home from './home/index'
-import BackGround from './background/index'
+import Picture from './background/Picture'
+import ShoppingCar from './player/ShoppingCar'
+import Music from './background/Music'
+import DateStore from './base/DateStore'
+import ResourceLoader from './base/ResourceLoader'
+import Controller from './Controller'
 
 /**
  * 游戏主函数
  */
 export default class Main {
   constructor() {
-    let myCanvas = wx.createCanvas();
-    let aa = new BackGround(myCanvas);
-    //添加背景图片
-    //var image = wx.createImage();
-    //image.onload = function () {
-    //ctx.drawImage(image, 0, 0, myCanvas.width*1.5, myCanvas.height);
-    //}
-    //image.src = 'images/bg.jpg';
-
-    //登录&获取微信步数
-    wx.login({
-      success: function (res) {
-        wx.getWeRunData({
-          success: function (res) {
-            console.log(res);
-          },
-          fail: function (res) {
-            console.log(res);
-          }
-        })
-      },
-      fail: function (res) {
-        console.log(res);
-      }
-    })
-
-    //触屏事件
-    wx.onTouchStart(function(e){
-      let x = e.touches[0].clientX;
-      let y = e.touches[0].clientY;
-      console.log(x+"...."+y);
-    })
-
-    //添加音频
-    var InnerAudioContext = wx.createInnerAudioContext();
-    InnerAudioContext.src = "audio/dream.mp3";
-    InnerAudioContext.autoplay = true;
-    InnerAudioContext.loop = true;
+    this.canvas = wx.createCanvas();
+    this.ctx = this.canvas.getContext('2d');
+    this.dateStore = DateStore.getInstance();
+    this.music= new Music("audio/dream.mp3");
+    new ResourceLoader().onLoaded(map => this.init(map))
+  }
+  init(map){
+    this.dateStore.canvas = this.canvas;
+    this.dateStore.ctx = this.ctx;
+    this.dateStore.resource = this.map;
+    this.dateStore.put("background", new Picture(this.ctx, map.get("background")));
+    this.dateStore.put("shoppingCar", new ShoppingCar(this.ctx, map.get("shoppingCar")));
+    new Controller().run();
   }
 }
