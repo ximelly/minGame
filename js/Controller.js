@@ -10,5 +10,6 @@ export default class Controller {
   run(){
     this.instance.get("background").draw();
     this.instance.get("shoppingCar").draw();
+    requestAnimationFrame(()=>this.run());
   }
 }

@@ -21,7 +21,7 @@ export default class DrawImg {
     this.h = h;
   }
 
-  draw() {
-    this.ctx.drawImage(this.image, this.srcX, this.srcY, this.srcW, this.srcH, this.x, this.y, this.w, this.h)
+  draw(ctx=this.ctx,image = this.image, srcX = this.srcX, srcY = this.srcY, srcW = this.srcW, srcH=this.srcH, x=this.x, y=this.y, w=this.w, h=this.h) {
+    this.ctx.drawImage(image, srcX, srcY, srcW, srcH,x,y,w,h);
   }
 }
