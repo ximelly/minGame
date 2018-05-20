@@ -1,6 +1,7 @@
 import Picture from './background/Picture'
 import ShoppingCar from './player/ShoppingCar'
 import Music from './background/Music'
+import Ball from './base/Ball'
 import DateStore from './base/DateStore'
 import ResourceLoader from './base/ResourceLoader'
 import Controller from './Controller'
@@ -20,8 +21,10 @@ export default class Main {
     this.dateStore.canvas = this.canvas;
     this.dateStore.ctx = this.ctx;
     this.dateStore.resource = this.map;
+    this.dateStore.speed=2;
     this.dateStore.put("background", new Picture(this.ctx, map.get("background")));
     this.dateStore.put("shoppingCar", new ShoppingCar(this.ctx, map.get("shoppingCar")));
+    this.dateStore.put("ball", new Ball(this.ctx, map.get("ball")));
     new Controller().run();
   }
 }

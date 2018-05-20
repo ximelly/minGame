@@ -1,9 +1,71 @@
 import DrawImg from '../base/DrawImg'
+import DateStore from '../base/DateStore'
 /**
  * 背景类
  */
 export default class ShoppingCar extends DrawImg{
+
   constructor(ctx,img) {
     super(ctx,img,0,0,img.width,img.height,0,0,100,100);
+
+    //购物车的默认位置
+    this.dateStore = DateStore.getInstance();
+    this.width = img.width;
+    this.height = img.height;
+    this.canvas = this.dateStore.canvas;
+    this.x = this.canvas.width / 2 - this.width / 2;
+    this.y = this.canvas.height - this.height;
+    this.remove();
+  }
+
+
+  remove(){
+    this.canvas.addEventListener('touchstart', ((e) => {
+      e.preventDefault();
+      let x = e.touches[0].clientX;
+      let y = e.touches[0].clientY;
+
+      if (this.checkIsFingerOnCar(x, y)) {
+        this.touched = true;
+        this.setCarPos(x, y)
+      }
+    }).bind(this))
+    this.canvas.addEventListener('touchmove', ((e) => {
+      e.preventDefault();
+      let x = e.touches[0].clientX;
+      let y = e.touches[0].clientY;
+      if (this.touched) { this.setCarPos(x, y)}
+    }).bind(this))
+
+    this.canvas.addEventListener('touchend', ((e) => {
+      e.preventDefault();
+      this.touched = false;
+    }).bind(this))
+  }
+
+/**
+ * 当手指触摸购物车的时候
+ * @param {Number} x: 手指的X轴坐标
+ * @param {Number} y: 手指的Y轴坐标
+ * @return {Boolean}: 用于标识手指是否在购物车的布尔值
+ */
+  checkIsFingerOnCar(x, y) {
+    return !!(x >= this.x&& x <= this.x + this.width)
+  }
+
+  /**
+   * 更新购物车的位置
+   * @param {Number} x: 手指的X轴坐标
+   * @param {Number} y: 手指的Y轴坐标
+   * @return {Boolean}: 用于标识手指是否在购物车的布尔值
+   */
+  setCarPos(x,y){
+    let disX = x - this.width / 2;
+    if (disX < 0) {
+      disX = 0;
+    }else if (disX > this.canvas.width - this.width){
+      disX = this.canvas.width - this.width;
+    }
+    this.x = disX;
   }
 }

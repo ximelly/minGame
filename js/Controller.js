@@ -9,7 +9,9 @@ export default class Controller {
 
   run(){
     this.instance.get("background").draw();
+    this.instance.get("ball").draw();
     this.instance.get("shoppingCar").draw();
-    requestAnimationFrame(()=>this.run());
+    let timer=requestAnimationFrame(()=>this.run());
+    this.instance.put("timer", timer);
   }
 }

@@ -3,5 +3,6 @@
  */
 export const ImgResource=[
   ['background', 'images/bg.jpg'],
-  ['shoppingCar', 'images/shoppingCar.png']
+  ['shoppingCar', 'images/shoppingCar.png'],
+  ['ball', 'images/ball.png']
 ];
