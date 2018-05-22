@@ -50,7 +50,7 @@ export default class ShoppingCar extends DrawImg{
  * @return {Boolean}: 用于标识手指是否在购物车的布尔值
  */
   checkIsFingerOnCar(x, y) {
-    return !!(x >= this.x&& x <= this.x + this.width)
+    return !!(x >= this.x&& x <= this.x + this.width&&y>=this.y&&y<=this.y+this.height)
   }
 
   /**
