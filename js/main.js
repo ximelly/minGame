@@ -17,7 +17,7 @@ export default class Main {
     this.ctx = this.canvas.getContext('2d');
     this.dateStore = DateStore.getInstance();
     this.controller = Controller.getInstance();
-    //this.music= new Music("audio/dream.mp3");
+    this.music = new Music("audio/dream.mp3");
     new ResourceLoader().onLoaded(map => this.init(map))
   }
   init(map){
@@ -30,7 +30,19 @@ export default class Main {
       .put("start", new Start(this.ctx, map.get("start")))
       .put("shoppingCar", new ShoppingCar(this.ctx, map.get("shoppingCar")))
       .put("ball", new Ball(this.ctx, map.get("ball")));
-    this.controller.creatBalls();
-    new Controller().run();
+    this.startBtn();
+    this.controller.run();
+  }
+  startBtn(){
+    this.canvas.addEventListener('touchstart', ((e) => {
+      e.preventDefault();
+      if (this.controller.gameOver) {
+        this.controller.gameOver = false;
+        this.dateStore.put("balls", []);
+        this.controller.creatBalls();
+        this.dateStore.get("count").Num=0;
+        this.controller.run();
+      }
+    }))
   }
 }
