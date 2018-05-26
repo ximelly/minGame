@@ -17,13 +17,16 @@ export default class Main {
     this.ctx = this.canvas.getContext('2d');
     this.dateStore = DateStore.getInstance();
     this.controller = Controller.getInstance();
-    this.music = new Music("audio/dream.mp3");
-    new ResourceLoader().onLoaded(map => this.init(map))
+    new ResourceLoader().onLoaded(map => this.init(map));
+    wx.onAudioInterruptionEnd(function () {
+      this.dateStore.music.play();
+    })
   }
   init(map){
     this.dateStore.canvas = this.canvas;
     this.dateStore.ctx = this.ctx;
     this.dateStore.resource = map;
+    this.dateStore.music = new Music("audio/dream.mp3");
     this.dateStore.put("background", new Picture(this.ctx, map.get("background")))
       .put("balls", [])
       .put("count", new Count())
@@ -36,6 +39,10 @@ export default class Main {
   startBtn(){
     wx.onTouchStart(((e) => {
       if (this.controller.gameOver) {
+        if (!this.dateStore.music){
+          this.dateStore.music = new Music("audio/dream.mp3");
+        }
+        this.dateStore.music.play();
         this.controller.gameOver = false;
         this.dateStore.put("balls", []);
         this.controller.creatBalls();

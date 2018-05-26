@@ -24,6 +24,8 @@ export default class Controller {
       this.gameOver = true;
       this.dealBalls();
       this.dateStore.get("start").draw();
+      this.dateStore.music.pause();
+      this.dateStore.music=null;
       cancelAnimationFrame(timer);
       this.dateStore.put("timer", null);
     } else if (this.gameOver === true){

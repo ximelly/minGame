@@ -3,9 +3,15 @@
  */
 export default class Music {
   constructor(musicSource) {
-    var InnerAudioContext = wx.createInnerAudioContext();
-    InnerAudioContext.src = musicSource;
-    InnerAudioContext.autoplay = true;
-    InnerAudioContext.loop = true;
+    this.audio = wx.createInnerAudioContext();
+    this.audio.src = musicSource;
+    this.audio.autoplay = false;
+    this.audio.loop = true;
+  }
+  play(){
+    this.audio.play();
+  }
+  pause() {
+    this.audio.pause();
   }
 }
