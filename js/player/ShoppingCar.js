@@ -20,7 +20,7 @@ export default class ShoppingCar extends DrawImg{
 
 
   remove(){
-    this.canvas.addEventListener('touchstart', ((e) => {
+    wx.onTouchStart(((e) => {
       e.preventDefault();
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
@@ -30,14 +30,15 @@ export default class ShoppingCar extends DrawImg{
         this.setCarPos(x, y)
       }
     }).bind(this))
-    this.canvas.addEventListener('touchmove', ((e) => {
+    
+    wx.onTouchMove(((e) => {
       e.preventDefault();
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
       if (this.touched) { this.setCarPos(x, y)}
     }).bind(this))
 
-    this.canvas.addEventListener('touchend', ((e) => {
+    wx.onTouchEnd(((e) => {
       e.preventDefault();
       this.touched = false;
     }).bind(this))
