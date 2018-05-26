@@ -34,15 +34,14 @@ export default class Main {
     this.controller.run();
   }
   startBtn(){
-    this.canvas.addEventListener('touchstart', ((e) => {
-      e.preventDefault();
+    wx.onTouchStart(((e) => {
       if (this.controller.gameOver) {
         this.controller.gameOver = false;
         this.dateStore.put("balls", []);
         this.controller.creatBalls();
-        this.dateStore.get("count").Num=0;
+        this.dateStore.get("count").Num = 0;
         this.controller.run();
       }
-    }))
+    }).bind(this));
   }
 }
