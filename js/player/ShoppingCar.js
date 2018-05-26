@@ -21,7 +21,6 @@ export default class ShoppingCar extends DrawImg{
 
   remove(){
     wx.onTouchStart(((e) => {
-      e.preventDefault();
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
 
@@ -30,16 +29,14 @@ export default class ShoppingCar extends DrawImg{
         this.setCarPos(x, y)
       }
     }).bind(this))
-    
+
     wx.onTouchMove(((e) => {
-      e.preventDefault();
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
       if (this.touched) { this.setCarPos(x, y)}
     }).bind(this))
 
     wx.onTouchEnd(((e) => {
-      e.preventDefault();
       this.touched = false;
     }).bind(this))
   }
