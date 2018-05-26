@@ -53,7 +53,7 @@ export default class Controller {
       })
       if (Balls[0].y + Balls[0].ballw >= Balls[0].dateStore.canvas.height) {//小球触碰到地板就销毁
         Balls.shift();
-      } else if ((Balls[0].x + Balls[0].ballw >= shoppingCar.x && Balls[0].x <= shoppingCar.x + shoppingCar.w) && (Balls[0].y + Balls[0].ballw===shoppingCar.y)) {//小球触碰到购物车，销毁球&&计数器+1
+      } else if ((Balls[0].x + Balls[0].ballw >= shoppingCar.x && Balls[0].x <= shoppingCar.x + shoppingCar.w) && ((Balls[0].y + Balls[0].ballw >= shoppingCar.y - 5) && (Balls[0].y + Balls[0].ballw<= shoppingCar.y))) {//小球触碰到购物车，销毁球&&计数器+1
         Balls.shift();
         this.Count.Num = this.Count.Num + 1;
       }
