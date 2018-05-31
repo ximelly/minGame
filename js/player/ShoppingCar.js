@@ -58,12 +58,19 @@ export default class ShoppingCar extends DrawImg{
    * @return {Boolean}: 用于标识手指是否在购物车的布尔值
    */
   setCarPos(x,y){
-    let disX = x - this.width / 2;
+    let disX = x - this.width / 2,
+        disY = y-this.height/2;
     if (disX < 0) {
       disX = 0;
     }else if (disX > this.canvas.width - this.width){
       disX = this.canvas.width - this.width;
     }
+    if (disY < 0) {
+      disY = 0;
+    } else if (disY > this.canvas.height - this.height) {
+      disY = this.canvas.height - this.height;
+    }
     this.x = disX;
+    this.y = disY;
   }
 }

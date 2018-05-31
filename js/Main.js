@@ -18,9 +18,6 @@ export default class Main {
     this.dateStore = DateStore.getInstance();
     this.controller = Controller.getInstance();
     new ResourceLoader().onLoaded(map => this.init(map));
-    wx.onAudioInterruptionEnd(function () {
-      this.dateStore.music.play();
-    })
   }
   init(map){
     this.dateStore.canvas = this.canvas;
