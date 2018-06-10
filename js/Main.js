@@ -1,9 +1,9 @@
 import Picture from './background/Picture'
 import ShoppingCar from './player/ShoppingCar'
 import Music from './background/Music'
-import Ball from './base/Ball'
+import Ball from './player/Ball'
 import Start from './player/Start'
-import Count from './base/Count'
+import Count from './player/Count'
 import DateStore from './base/DateStore'
 import ResourceLoader from './base/ResourceLoader'
 import Controller from './Controller'
@@ -24,17 +24,17 @@ export default class Main {
     this.dateStore.ctx = this.ctx;
     this.dateStore.resource = map;
     this.dateStore.music = new Music("audio/dream.mp3");
-    this.dateStore.put("background", new Picture(this.ctx, map.get("background")))
+    this.dateStore.put("background", new Picture(map.get("background")))
       .put("balls", [])
       .put("count", new Count())
-      .put("start", new Start(this.ctx, map.get("start")))
-      .put("shoppingCar", new ShoppingCar(this.ctx, map.get("shoppingCar")))
-      .put("ball", new Ball(this.ctx, map.get("ball")));
+      .put("start", new Start(map.get("start")))
+      .put("shoppingCar", new ShoppingCar(map.get("shoppingCar")))
+      .put("ball", new Ball(map.get("ball")));
     this.startBtn();
     this.controller.run();
   }
   startBtn(){
-    wx.onTouchStart(((e) => {
+    wx.onTouchStart((e) => {
       if (this.controller.gameOver) {
         if (!this.dateStore.music){
           this.dateStore.music = new Music("audio/dream.mp3");
@@ -46,6 +46,6 @@ export default class Main {
         this.dateStore.get("count").Num = 0;
         this.controller.run();
       }
-    }).bind(this));
+    });
   }
 }

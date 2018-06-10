@@ -1,5 +1,5 @@
 import DateStore from './base/DateStore'
-import Ball from "./base/Ball";
+import Ball from "./player/Ball";
 /**
  * 背景类
  */
@@ -28,7 +28,7 @@ export default class Controller {
       this.dateStore.music=null;
       this.drawStrat();
       cancelAnimationFrame(timer);
-      this.dateStore.put("timer", null);
+      this.dateStore.destory();
     } else if (this.gameOver === true){
       this.drawStrat();
     } else {
@@ -43,7 +43,7 @@ export default class Controller {
   //新增小球
   creatBalls() {
     const x = Math.random() * (this.dateStore.canvas.width - this.dateStore.get("ballw"));
-    this.dateStore.get("balls").push(new Ball(this.dateStore.ctx, this.dateStore.resource.get("ball"), x));
+    this.dateStore.get("balls").push(new Ball(this.dateStore.resource.get("ball"), x));
   }
   //处理小球跟购物车
   dealBalls() {

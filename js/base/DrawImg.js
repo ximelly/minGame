@@ -1,15 +1,15 @@
 import ResourceLoader from './ResourceLoader'
+import DateStore from './DateStore'
 /**
  *绘制图片类
  */
 export default class DrawImg {
-  constructor(ctx = null,
-              image = null,
+  constructor(image = null,
               srcX = 0,srcY = 0,
               srcW = 0,srcH = 0,
               x = 0,y=0,
               w = 0,h = 0) {
-    this.ctx = ctx;
+    this.ctx = DateStore.getInstance().ctx;
     this.image = image;
     this.srcX = srcX;
     this.srcY = srcY;
@@ -21,7 +21,11 @@ export default class DrawImg {
     this.h = h;
   }
 
-  draw(ctx=this.ctx,image = this.image, srcX = this.srcX, srcY = this.srcY, srcW = this.srcW, srcH=this.srcH, x=this.x, y=this.y, w=this.w, h=this.h) {
-    this.ctx.drawImage(image, srcX, srcY, srcW, srcH,x,y,w,h);
+  draw(){
+    this.ctx.drawImage(this.image,
+                      this.srcX,this.srcY,
+                      this.srcW,this.srcH,
+                      this.x,this.y,
+                      this.w, this.h);
   }
 }

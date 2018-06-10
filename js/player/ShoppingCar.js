@@ -5,8 +5,8 @@ import DateStore from '../base/DateStore'
  */
 export default class ShoppingCar extends DrawImg{
 
-  constructor(ctx,img) {
-    super(ctx,img,0,0,img.width,img.height,0,0,100,100);
+  constructor(img) {
+    super(img,0,0,img.width,img.height,0,0,100,100);
 
     //购物车的默认位置
     this.dateStore = DateStore.getInstance();
@@ -20,7 +20,7 @@ export default class ShoppingCar extends DrawImg{
 
 
   remove(){
-    wx.onTouchStart(((e) => {
+    wx.onTouchStart((e) => {
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
 
@@ -28,17 +28,17 @@ export default class ShoppingCar extends DrawImg{
         this.touched = true;
         this.setCarPos(x, y)
       }
-    }).bind(this))
+    })
 
-    wx.onTouchMove(((e) => {
+    wx.onTouchMove((e) => {
       let x = e.touches[0].clientX;
       let y = e.touches[0].clientY;
       if (this.touched) { this.setCarPos(x, y)}
-    }).bind(this))
+    })
 
-    wx.onTouchEnd(((e) => {
+    wx.onTouchEnd((e) => {
       this.touched = false;
-    }).bind(this))
+    })
   }
 
 /**

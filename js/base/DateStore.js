@@ -1,5 +1,6 @@
 /**
  * 存储变量
+ * 避免交叉引用，程序解耦，便于统一管理
  */
 export default class DateStore {
   static getInstance(){
