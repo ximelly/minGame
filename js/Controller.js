@@ -15,30 +15,54 @@ export default class Controller {
     this.dateStore.speed=5;
     this.dateStore.ballw = 50;
     this.gameOver = true;
+    this.gameTime=0;//开始游戏时长
+    this.gameMaxTime = 600;//每关游戏最长时间
+    this.dateStore.gameBllNum = 10;//每关要接到的小球个数
+    this.customerTouch=true;//是否监听用户触屏事件
   }
   run() {
+    this.gameTime++;
     this.dateStore.get("background").draw();
     this.Count = this.dateStore.get("count");
     let timer;
+    this.dealBalls();
     this.dateStore.get("shoppingCar").draw();
-    if (this.Count.Num >= 10 && this.gameOver === false) {
-      this.gameOver = true;
-      this.dealBalls();
-      this.dateStore.music.pause();
-      this.dateStore.music=null;
-      this.drawStrat();
-      cancelAnimationFrame(timer);
-      this.dateStore.destory();
-    } else if (this.gameOver === true){
-      this.drawStrat();
-    } else {
-      this.dealBalls();
-      timer = requestAnimationFrame(() => this.run());
-      this.dateStore.put("timer", timer);
+    if (this.gameOver === false) {//游戏进行中
+      if (this.Count.Num >= this.dateStore.gameBllNum) {//游戏挑战成功
+        this.gameIsOver(1);
+      } else if (this.gameTime >= this.gameMaxTime) {//游戏挑战失败
+        this.gameIsOver(2);
+      } else {//游戏开始
+        timer = requestAnimationFrame(() => this.run());
+        this.dateStore.put("timer", timer);
+      }
+    } else if (this.gameOver === true){//游戏还未开始
+      this.gameIsOver(3);
     }
   }
-  drawStrat(){
-    this.dateStore.get("start").draw();
+  //游戏状态处理
+  gameIsOver(status){
+    if (status === 1) {//挑战成功
+      this.dateStore.get("success").draw();
+      this.dateStore.speed += 0.6;//每关增加难度，小球运动速度增加
+      this.dateStore.gameBllNum += 5;//每关增加难度，后一关比前一关多3
+      this.Count.step++;//闯关进度加一
+      this.customerTouch=true;
+    } else if (status === 2) {//挑战失败
+      this.dateStore.get("fail").draw();
+      this.dateStore.speed=5;//重置
+      this.dateStore.gameBllNum = 10;//重置
+      this.Count.step = 1;//重置
+      this.customerTouch=true;
+    } else if (status === 3) {//游戏还未开始
+      this.dateStore.get("start").draw();
+    } 
+    this.gameTime=0;
+    this.gameOver = true;
+    this.dateStore.music.pause();
+    let timer = this.dateStore.get("timer");
+    if (timer) {cancelAnimationFrame(timer);}
+    if(status !== 3){this.dateStore.destory();}
   }
   //新增小球
   creatBalls() {
@@ -59,7 +83,7 @@ export default class Controller {
           this.Count.Num = this.Count.Num + 1;
         }
       })
-      if (Balls.length < 10 && (Balls.length==0||Balls[Balls.length - 1].y > shoppingCar.height +20)) {//如果小球的个数小于5并且最后一个出现的小球达到一定的高度，则创建一个新的球
+      if (Balls.length < this.dateStore.gameBllNum && (Balls.length==0||Balls[Balls.length - 1].y > shoppingCar.height +20)) {//如果小球的个数小于5并且最后一个出现的小球达到一定的高度，则创建一个新的球
         this.creatBalls();
       }
     }
