@@ -18,21 +18,24 @@ export default class Main {
     this.ctx = this.canvas.getContext('2d');
     this.dateStore = DateStore.getInstance();
     this.controller = Controller.getInstance();
-    new ResourceLoader().onLoaded(map => this.init(map));
+    new ResourceLoader().onLoaded(map => this.onResourceFirstLoaded(map));
   }
-  init(map){
+  onResourceFirstLoaded(map){
     this.dateStore.canvas = this.canvas;
     this.dateStore.ctx = this.ctx;
     this.dateStore.resource = map;
+    this.init();
+  }
+  init(){
     this.dateStore.music = new Music("audio/dream.mp3");
-    this.dateStore.put("background", new Picture(map.get("background")))
+    this.dateStore.put("background", new Picture(this.dateStore.resource.get("background")))
       .put("balls", [])
       .put("count", new Count())
-      .put("start", new Start(map.get("start")))
-      .put("success", new Status(map.get("success")))
-      .put("fail", new Status(map.get("fail")))
-      .put("shoppingCar", new ShoppingCar(map.get("shoppingCar")))
-      .put("ball", new Ball(map.get("ball")));
+      .put("start", new Start(this.dateStore.resource.get("start")))
+      .put("success", new Status(this.dateStore.resource.get("success")))
+      .put("fail", new Status(this.dateStore.resource.get("fail")))
+      .put("shoppingCar", new ShoppingCar(this.dateStore.resource.get("shoppingCar")))
+      .put("ball", new Ball(this.dateStore.resource.get("ball")));
     this.startBtn();
     this.controller.run();
   }
@@ -68,6 +71,7 @@ export default class Main {
             }
           })
         }else{
+          this.init();
           this.start();
         }
       }

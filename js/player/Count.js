@@ -5,7 +5,6 @@ import DateStore from '../base/DateStore'
 export default class Count {
   constructor() {
     this.Num=0;
-    this.step=1;
     this.dateStore=DateStore.getInstance();
     this.ctx=this.dateStore.ctx;
   }
@@ -18,6 +17,6 @@ export default class Count {
       this.ctx.fillText("当前得分:" + this.Num, 20,50 );
     }
     
-    this.ctx.fillText("当前第" + this.step + "关  目标分数" + this.dateStore.gameBllNum, 20,80);
+    this.ctx.fillText("当前第" + this.dateStore.step + "关  目标分数" + this.dateStore.gameBllNum, 20,80);
   }
 }

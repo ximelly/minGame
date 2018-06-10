@@ -18,6 +18,7 @@ export default class Controller {
     this.gameTime=0;//开始游戏时长
     this.gameMaxTime = 600;//每关游戏最长时间
     this.dateStore.gameBllNum = 10;//每关要接到的小球个数
+    this.dateStore.step=1;//默认第一关
     this.customerTouch=true;//是否监听用户触屏事件
   }
   run() {
@@ -46,13 +47,13 @@ export default class Controller {
       this.dateStore.get("success").draw();
       this.dateStore.speed += 0.6;//每关增加难度，小球运动速度增加
       this.dateStore.gameBllNum += 5;//每关增加难度，后一关比前一关多3
-      this.Count.step++;//闯关进度加一
+      this.dateStore.step++;//闯关进度加一
       this.customerTouch=true;
     } else if (status === 2) {//挑战失败
       this.dateStore.get("fail").draw();
       this.dateStore.speed=5;//重置
       this.dateStore.gameBllNum = 10;//重置
-      this.Count.step = 1;//重置
+      this.dateStore.step = 1;//重置
       this.customerTouch=true;
     } else if (status === 3) {//游戏还未开始
       this.dateStore.get("start").draw();
@@ -80,7 +81,7 @@ export default class Controller {
           Balls.splice(index, 1);
         } else if ((Balls[index].x + Balls[index].ballw >= shoppingCar.x && Balls[index].x <= shoppingCar.x + shoppingCar.w) && ((Balls[index].y + Balls[index].ballw >= shoppingCar.y - 5) && (Balls[index].y + Balls[index].ballw <= shoppingCar.y))) {//小球触碰到购物车，销毁球&&计数器+1
           Balls.splice(index, 1);
-          this.Count.Num = this.Count.Num + 1;
+          this.Count.Num += 1;
         }
       })
       if (Balls.length < this.dateStore.gameBllNum && (Balls.length==0||Balls[Balls.length - 1].y > shoppingCar.height +20)) {//如果小球的个数小于5并且最后一个出现的小球达到一定的高度，则创建一个新的球
