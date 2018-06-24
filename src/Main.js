@@ -5,8 +5,8 @@ import Ball from './player/Ball'
 import Start from './player/Start'
 import Status from './player/Status'
 import Count from './player/Count'
-import DateStore from './base/DateStore'
-import ResourceLoader from './base/ResourceLoader'
+import DateStore from './util/DateStore'
+import ResourceLoader from './util/ResourceLoader'
 import Controller from './Controller'
 
 /**
@@ -27,7 +27,7 @@ export default class Main {
     this.init();
   }
   init(){
-    this.dateStore.music = new Music("audio/dream.mp3");
+    this.dateStore.music = new Music("res/audio/dream.mp3");
     this.dateStore.put("background", new Picture(this.dateStore.resource.get("background")))
       .put("balls", [])
       .put("count", new Count())

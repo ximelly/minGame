@@ -1,3 +1,3 @@
-import Main from './js/Main'
+import Main from './src/Main'
 
 new Main()
